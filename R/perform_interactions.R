@@ -5,6 +5,26 @@ perform_interactions <- function(pop, logDir, params) {
     }))[base::order(agentID),]
 
   pb <- utils::txtProgressBar(min = 0, max = params[["nrOfSnapshots"]], initial = 0, style = 3)
+
+  ##RP 2025
+  counter <- as.integer(0)
+  env <- new.env()
+  if params["dynamicBias"]]) {
+    env$perc_log <- data.table::data.table(
+      counter = integer(),
+      perceiverID = integer(),
+      biasScore = numeric(),
+      accepted = logical(),
+      dct0 = numeric(),
+      dct1 = numeric(),
+      dct2 = numeric(),
+      dct3 = numeric(),
+      dct4 = numeric(),
+      dct5 = numeric()
+    )
+  }
+  ##
+  
   for (snap in 1:params[["nrOfSnapshots"]]) {
     utils::setTxtProgressBar(pb, snap)
     interactionsLog <- create_interactions_log(params)
