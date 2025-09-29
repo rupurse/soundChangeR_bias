@@ -5,6 +5,12 @@ create_agent <- function(id, input.df, selectedSpeaker, maxMemorySize, params) {
   agent$agentID <- id
   agent$group <- input.df[speaker == selectedSpeaker, group][1]
   agent$speaker <- input.df[speaker == selectedSpeaker, speaker][1]
+
+  ##RP 2025
+  if (params[["usePercScores"]]) {
+    agent$percScore <- input.df[speaker == selectedSpeaker, percScores][1]
+  }
+  ##
   
   methodReg <- get_method_register()
   cacheNames <- base::c("nFeatures", "qda", "GMM", "nAccepted", "nForgotten", methodReg[params[["featureExtractionMethod"]], cacheEntries][[1]] %>% .[!base::is.na(.)])
