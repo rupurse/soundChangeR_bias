@@ -1,4 +1,4 @@
-perform_single_interaction <- function(pop, interactionsLog, nrSim, groupsInfo, params) {
+perform_single_interaction <- function(pop, interactionsLog, env, nrSim, groupsInfo, params, counter) {
 
   interactionPartners <- choose_interaction_partners(groupsInfo, params)
   
@@ -6,5 +6,5 @@ perform_single_interaction <- function(pop, interactionsLog, nrSim, groupsInfo, 
   perceiver <- pop[[interactionPartners[["percNr"]]]]
 
   pt <- produce_token(producer, params)
-  perceive_token(perceiver, pt, interactionsLog, nrSim, params)
+  perceive_token(perceiver, pt, interactionsLog, env, nrSim, params, counter)
 }
