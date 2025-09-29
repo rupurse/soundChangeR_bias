@@ -1,4 +1,4 @@
-perceive_token <- function(agent, producedToken, interactionsLog, nrSim, params) {
+perceive_token <- function(agent, producedToken, interactionsLog, env, nrSim, params, counter) {
 
   if (base::is.null(producedToken)) {
     return()
@@ -13,6 +13,15 @@ perceive_token <- function(agent, producedToken, interactionsLog, nrSim, params)
       FNN::knnx.index(agent$features[agent$memory$valid == TRUE,], features, params[["perceptionOOVNN"]])
     ])))
   }
+
+  ##RP 2025
+  if (params[["usePercscores"]]) {
+    currentPercScore <- getPercScore(env, producedToken, agent, perceiverPhoneme, params, counter)
+    if (params[["useWarping"]]) {
+      producedToken <- warpToken(producedToken, agent, producer, currentPercScore, params)
+    }
+  }
+  ##
 
   memorise <- TRUE
   for (strategy in params[["memoryIntakeStrategy"]]) {
@@ -40,7 +49,32 @@ perceive_token <- function(agent, producedToken, interactionsLog, nrSim, params)
     }
   }
 
-  write_interactions_log(interactionsLog, producedToken, agent, perceiverPhoneme, memorise, strategy, features, nrSim)
+  ##RP 2025
+  if (params[["usePercScores"]]) {
+    write_interactions_log2(interactionsLog, producedToken, agent, perceiverPhoneme, memorise, strategy, features, nrSim, currentPercScore, counter)
+  } else {
+    write_interactions_log(interactionsLog, producedToken, agent, perceiverPhoneme, memorise, strategy, features, nrSim)
+  }
+
+  if (params[["dynamicBias"]]) {
+    if (perceiverPhoneme %in% params[["biasedPhones"]]) {
+      lastRow <- tail(subset(interactionsLog, valid == T), 1)
+      stopifnot(lastRow$counter == counter, lastRow$perceiverID == agent$agentID, lastRow$biasScore == currentPercScore)
+      logRow <- data.table::data.table(
+        counter = lastRow$counter,
+        perceiverID = lastRow$biasScore,
+        accepted = lastRow$accepted,
+        dct0 = lastRow$P1,
+        dct1 = lastRow$P2,
+        dct2 = lastRow$P3,
+        dct3 = lastRow$P4,
+        dct4 = lastRow$P5,
+        dct5 = lastRow$P6
+      )
+    }
+    env$perc_log <- rbind(env$perc_log, logRow)
+  }
+  ##
 
   if (get_cache_value(agent, "nAccepted") %% params[["computeGMMsInterval"]] == 0) {
     update_features(agent, compute_features(agent, params))
