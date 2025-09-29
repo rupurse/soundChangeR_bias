@@ -16,6 +16,12 @@ load_input_data <- function(params) {
     stop("Some of the columns you have chosen as features, word, and/or speaker do not exist in the inputDataFile.")
   }
   input.df %>% data.table::setnames(base::c(params[["word"]], params[["speaker"]]), base::c("word", "speaker"))
+
+  ##RP 2025
+  if (params[["usePercScores"]]) {
+    input.df %>% data.table::setnames(params[["percScores"]],"percScores")
+  }
+  ##
   
   if (params[["useFlexiblePhonology"]]) {
     input.df$phoneme <- NA_character_
