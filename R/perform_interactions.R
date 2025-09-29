@@ -29,7 +29,8 @@ perform_interactions <- function(pop, logDir, params) {
     utils::setTxtProgressBar(pb, snap)
     interactionsLog <- create_interactions_log(params)
     for (i in 1:params[["interactionsPerSnapshot"]]) {
-      perform_single_interaction(pop, interactionsLog, snap, groupsInfo, params)
+      counter <- counter + 1
+      perform_single_interaction(pop, interactionsLog, env, snap, groupsInfo, params, counter)
     }
     save_population(pop, extraCols = base::list(snapshot = snap), logDir = logDir)
     save_interactions_log(interactionsLog, extraCols = base::list(snapshot = snap), logDir = logDir)
