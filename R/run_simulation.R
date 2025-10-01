@@ -78,11 +78,11 @@ run_simulation <- function(inputDataFile = NULL,
                            ###RP 2025
                            useEvalBias = FALSE,
                            evalBiasScale = 0.2,
-                           usePercScores = TRUE,
+                           usePercScores = FALSE,
                            percScores = "nasal_voiceless_bias",
                            biasedPhones = "nasal_voiceless",
-                           useWarping = TRUE,
-                           dynamicBias = TRUE) {
+                           useWarping = FALSE,
+                           dynamicBias = FALSE) {
   
   params <- base::as.list(base::environment())
   base::dir.create(params[["rootLogDir"]], showWarnings = FALSE, recursive = TRUE)
