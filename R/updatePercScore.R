@@ -20,7 +20,7 @@ updatePercScore <- function(producedToken, perceiver, log, bias, params) {
   deltaNorm <- deltaCOM / 49
 
   current_bias <- bias
-  learning_rate <- 0.5
+  change_rate <- params[["biasChangeRate"]]
 
   if (deltaNorm < 0) {
     scaling_factor <- if (current_bias > 0.5) {
@@ -38,7 +38,7 @@ updatePercScore <- function(producedToken, perceiver, log, bias, params) {
     scaling_factor <- 0
   }
 
-  change <- deltaNorm * learning_rate * scaling_factor
+  change <- deltaNorm * change_rate * scaling_factor
   newPercScore <- min(1, max(0, current_bias + change))
 
   return(newPercScore)
