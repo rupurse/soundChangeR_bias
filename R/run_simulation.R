@@ -76,6 +76,8 @@ run_simulation <- function(inputDataFile = NULL,
                            rootLogDir = "./logDir",
                            notes = "",
                            ###RP 2025
+                           useEvalBias = FALSE,
+                           evalBiasScale = 0.2,
                            usePercScores = TRUE,
                            percScores = "nasal_voiceless_bias",
                            biasedPhones = "nasal_voiceless",
