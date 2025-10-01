@@ -1,4 +1,4 @@
-mahalanobis_distance <- function(exemplar, features, phoneme, agent, params, bias=NULL) {
+mahalanobis_distance <- function(exemplar, features, phoneme, agent, params, bias=0) {
   
   mahalDist <- compute_mahal_distance(agent, features, phoneme, params, bias)
   mahalDist <= stats::qchisq(p = params[["mahalanobisProbThreshold"]], df = get_cache_value(agent, "nFeatures"))
