@@ -1,4 +1,4 @@
-compute_mahal_distance <- function(agent, features, phoneme, params, bias) {
+compute_mahal_distance <- function(agent, features, phoneme, params, bias=NULL) {
   
   if (!params[["useFlexiblePhonology"]]) {
     if (params[["useEvalBias"]]) {
