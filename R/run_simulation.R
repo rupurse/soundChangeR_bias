@@ -82,7 +82,8 @@ run_simulation <- function(inputDataFile = NULL,
                            useEvalBias = FALSE,
                            evalBiasScale = 0.2,
                            useWarping = FALSE,
-                           dynamicBias = FALSE) {
+                           dynamicBias = FALSE,
+                           biasChangeRate = 0.5) {
   
   params <- base::as.list(base::environment())
   base::dir.create(params[["rootLogDir"]], showWarnings = FALSE, recursive = TRUE)
