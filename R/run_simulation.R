@@ -77,10 +77,10 @@ run_simulation <- function(inputDataFile = NULL,
                            notes = "",
                            ###RP 2025
                            usePercScores = FALSE,
-                           useEvalBias = FALSE,
-                           evalBiasScale = 0.2,
                            percScores = "nasal_voiceless_bias",
                            biasedPhones = "nasal_voiceless",
+                           useEvalBias = FALSE,
+                           evalBiasScale = 0.2,
                            useWarping = FALSE,
                            dynamicBias = FALSE) {
   
