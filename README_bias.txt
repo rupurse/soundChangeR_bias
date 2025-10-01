@@ -46,8 +46,3 @@ run_simulation(inputDataFile = "/User/DCT_data.csv", speaker= "speaker", word = 
                biasedPhones = "nasal_voiceless", useWarping = TRUE,
                dynamicBias = TRUE, biasChangeRate = 0.5)
 #Additional runs of this model (Appendix C) used randum number seeds of 6, 7, 8, and 9.
-
-
-
-
-
